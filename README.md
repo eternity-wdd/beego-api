@@ -14,6 +14,18 @@
   数据库文件：beego_api.sql
 ```
 
+- 修改数据库配置
+```
+  conf文件夹下的 app.conf文件
+  
+  dbuser = root
+  dbpassword = root
+  dbhost = localhost
+  dbport = 3306
+  dbname = beego_api
+  dbprefix = bg_
+```
+
 - 安装所有依赖：
 
 ```
