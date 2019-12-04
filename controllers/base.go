@@ -56,21 +56,22 @@ func (p *baseController) Prepare() {
 		query, _ = json.Marshal(newParams) // 获取query参数
 
 	} else {
-		query = p.Ctx.Input.RequestBody
+		query = p.Ctx.Input.RequestBody // 获取Body中的参数
 
 	}
-	p.apiLogModel.Params = string(query.([]byte))
-	p.apiLogModel.Name = p.Ctx.Input.URL()
-	p.apiLogModel.Method = p.Ctx.Input.Method()
-	p.apiLogModel.Server = p.Ctx.Input.Domain()
-	p.apiLogModel.Client = p.Ctx.Input.Refer()
-	tem, _ := json.Marshal(p.Ctx.Input.Context.Request.Header)
+
+	p.apiLogModel.Params = string(query.([]byte))              // 将[]byte转字符串
+	p.apiLogModel.Name = p.Ctx.Input.URL()                     // 获取访问路径： /v1/weather/future
+	p.apiLogModel.Method = p.Ctx.Input.Method()                // 获取访问方法， GET/POST
+	p.apiLogModel.Server = p.Ctx.Input.Domain()                // 获取访问本服务的域名，当多个服务的日志记录到同一张表时区分
+	p.apiLogModel.Client = p.Ctx.Input.Refer()                 // 访问接口的来源地址
+	tem, _ := json.Marshal(p.Ctx.Input.Context.Request.Header) // 请求头
 	p.apiLogModel.Header = string(tem)
-	p.apiLogModel.CreateTime = time.Now()
+	p.apiLogModel.CreateTime = time.Now() // 请求时间
 	p.apiLogModel.StartTime, _ = strconv.Atoi(strconv.FormatInt(time.Now().Unix(), 10))
 	p.startTime = time.Now().UnixNano() / 1e6
 	fmt.Println(1111111111111)
-	p.apiLogModel.Platform = "测试"
+	p.apiLogModel.Platform = "测试" //	接口所属平台，类似 p.apiLogModel.Server
 
 }
 
@@ -80,9 +81,9 @@ func (p *baseController) Prepare() {
 // return  bool
 func (p *baseController) ApiLog(result map[string]interface{}) {
 	res, _ := json.Marshal(result)
-	p.apiLogModel.Response = string(res)
+	p.apiLogModel.Response = string(res) // 响应结果
 	lifeTime := time.Now().UnixNano()/1e6 - p.startTime
-	p.apiLogModel.Life, _ = strconv.Atoi(strconv.FormatInt(lifeTime, 10))
+	p.apiLogModel.Life, _ = strconv.Atoi(strconv.FormatInt(lifeTime, 10)) //生命周期
 	id, err := models.AddApiLog(&p.apiLogModel)
 	if err == nil {
 		fmt.Println("插入日志成功")
