@@ -8,7 +8,9 @@ import (
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/logs"
 	"github.com/astaxie/beego/orm"
+	"strconv"
 	"strings"
+	"time"
 )
 
 type baseController struct {
@@ -17,6 +19,8 @@ type baseController struct {
 	o              orm.Ormer
 	controllerName string
 	actionName     string
+	apiLogModel    models.ApiLog
+	startTime      int64
 }
 
 // 控制器执行前会运行此方法
@@ -30,24 +34,10 @@ func (p *baseController) Prepare() {
 	p.log = logs.NewLogger(10000)
 	// 控制台打印日志
 	p.log.SetLogger("console")
-	// 输出文件打印
+	// 输出文件打印 输出打印
 	// p.l.SetLogger(logs.AdapterFile, `{"filename":"project.log","level":7,"maxlines":0,"maxsize":0,"daily":true,"maxdays":10,"color":true}`)
 
 	// TODO 记录API日志到数据库
-	p.apiLog()
-}
-
-// Title   API日志
-// Description 记录日志到MySQL数据库
-// Param   response
-// return  bool
-func (p *baseController) apiLog() bool {
-	// 获取路由以及访问方法
-	p.log.Debug(p.Ctx.Input.Refer())  //  http://localhost:8080/swagger/
-	p.log.Debug(p.Ctx.Input.Domain()) // localhost
-	p.log.Debug(p.Ctx.Input.URL())    // /v1/weather/
-	p.log.Debug(p.Ctx.Input.Method()) // GET
-	p.log.Debug(p.Ctx.Input.IP())     // ::1
 	var (
 		query interface{}
 	)
@@ -69,15 +59,36 @@ func (p *baseController) apiLog() bool {
 		query = p.Ctx.Input.RequestBody
 
 	}
-	// 声明log表的结构
-	var apiLog models.ApiLog
-	// fmt.Println(query)
+	p.apiLogModel.Params = string(query.([]byte))
+	p.apiLogModel.Name = p.Ctx.Input.URL()
+	p.apiLogModel.Method = p.Ctx.Input.Method()
+	p.apiLogModel.Server = p.Ctx.Input.Domain()
+	p.apiLogModel.Client = p.Ctx.Input.Refer()
+	tem, _ := json.Marshal(p.Ctx.Input.Context.Request.Header)
+	p.apiLogModel.Header = string(tem)
+	p.apiLogModel.CreateTime = time.Now()
+	p.apiLogModel.StartTime, _ = strconv.Atoi(strconv.FormatInt(time.Now().Unix(), 10))
+	p.startTime = time.Now().UnixNano() / 1e6
 	fmt.Println(1111111111111)
-	// 将参数作为json的string保存到表
-	apiLog.Params = string(query.([]byte))
+	p.apiLogModel.Platform = "测试"
 
-	// apiLog
-	return true
+}
+
+// Title   API日志
+// Description 记录日志到MySQL数据库
+// Param   result
+// return  bool
+func (p *baseController) ApiLog(result map[string]interface{}) {
+	res, _ := json.Marshal(result)
+	p.apiLogModel.Response = string(res)
+	lifeTime := time.Now().UnixNano()/1e6 - p.startTime
+	p.apiLogModel.Life, _ = strconv.Atoi(strconv.FormatInt(lifeTime, 10))
+	id, err := models.AddApiLog(&p.apiLogModel)
+	if err == nil {
+		fmt.Println("插入日志成功")
+		var logId = id
+		fmt.Println(logId)
+	}
 }
 
 // @Title   成功返回json
@@ -104,6 +115,7 @@ func (p *baseController) SuccessJson(response map[string]interface{}) {
 	p.ServeJSON()
 
 	// TODO 记录日志
+	p.ApiLog(result)
 
 	// 停止声明周期
 	p.StopRun()
@@ -139,6 +151,7 @@ func (p *baseController) ErrorJson(response map[string]interface{}) {
 	p.ServeJSON()
 
 	// TODO 记录日志
+	p.ApiLog(result)
 
 	// 停止声明周期
 	p.StopRun()

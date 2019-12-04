@@ -75,7 +75,6 @@ func formatGrid(grid []interface{}) map[string]interface{} {
 		tMin[datatime] = append(tMin[datatime], temp["tmp_min"].(float64))
 		// 风速
 		windSpeed[datatime] = append(windSpeed[datatime], math.Sqrt(math.Pow(temp["u10"].(float64), 2)+math.Pow(temp["v10"].(float64), 2)))
-
 	}
 	//strconv.FormatInt(util.WindSpeed(temp["wind_level"].(float64)), 10)+"级"
 	decimal.DivisionPrecision = 3
@@ -86,10 +85,9 @@ func formatGrid(grid []interface{}) map[string]interface{} {
 		mData["tMax"] = tMax[key][util.ArrayMax(tMax[key]).(int)]
 		mData["tMin"] = tMax[key][util.ArrayMin(tMax[key]).(int)]
 		mData["t"] = decimal.NewFromFloat(util.ArraySum(wet[key])).Div(decimal.NewFromFloat(float64(len(wet[key]))))
-		mData["windSpeed"] = decimal.NewFromFloat(util.ArraySum(windSpeed[key])).Div(decimal.NewFromFloat(float64(len(windSpeed[key]))))
-
-		// decimal.NewFromFloat(mData["windSpeed"].(float64))
-		windLevel, _ := decimal.Decimal.Float64(decimal.NewFromFloat(16.12))
+		test := decimal.NewFromFloat(util.ArraySum(windSpeed[key])).Div(decimal.NewFromFloat(float64(len(windSpeed[key]))))
+		mData["windSpeed"] = test
+		windLevel, _ := test.Float64()
 		mData["windLevel"] = strconv.FormatInt(util.WindSpeed(windLevel), 10) + "级" //
 		// fmt.Println(mData)
 		data[key] = mData

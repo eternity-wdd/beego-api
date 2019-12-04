@@ -11,23 +11,18 @@ import (
 )
 
 type ApiLog struct {
-	Id           int       `orm:"column(id);auto" description:"ID"`
-	Name         string    `orm:"column(name);size(64)" description:"接口名称URL"`
-	Platform     string    `orm:"column(platform);size(32)" description:"接口所属平台"`
-	Controller   string    `orm:"column(controller);size(32)" description:"controller控制器"`
-	Action       string    `orm:"column(action);size(32)" description:"action方法"`
-	Method       string    `orm:"column(method);size(16)" description:"URL请求方法"`
-	Params       string    `orm:"column(params);size(2000)" description:"请求参数json"`
-	Header       string    `orm:"column(header);size(255)" description:"请求头"`
-	Client       string    `orm:"column(client);size(32)" description:"客户端IP或域名"`
-	Server       string    `orm:"column(server);size(64)" description:"服务端名称（端口不是80时，会添加端口号）"`
-	ResponseCode string    `orm:"column(response_code);size(8)" description:"响应状态码"`
-	ResponseMsg  string    `orm:"column(response_msg);size(255)" description:"响应消息"`
-	ResponseData string    `orm:"column(response_data)" description:"响应数据"`
-	CreateTime   time.Time `orm:"column(create_time);type(timestamp);auto_now" description:"请求时间（在NAVICAT中检索日志时使用）"`
-	StartTime    int       `orm:"column(start_time);null" description:"接口开始时间"`
-	EndTime      int       `orm:"column(end_time);null" description:"接口结束时间"`
-	Life         int       `orm:"column(life)" description:"接口耗时/单位毫秒"`
+	Id         int       `orm:"column(id);auto" description:"ID"`
+	Name       string    `orm:"column(name);size(64)" description:"接口名称URL"`
+	Platform   string    `orm:"column(platform);size(32)" description:"接口所属平台"`
+	Method     string    `orm:"column(method);size(16)" description:"URL请求方法"`
+	Params     string    `orm:"column(params);size(2000)" description:"请求参数json"`
+	Header     string    `orm:"column(header);size(255)" description:"请求头"`
+	Client     string    `orm:"column(client);size(32)" description:"客户端IP或域名"`
+	Server     string    `orm:"column(server);size(64)" description:"服务端名称（端口不是80时，会添加端口号）"`
+	Response   string    `orm:"column(response)" description:"响应数据"`
+	CreateTime time.Time `orm:"column(create_time);type(timestamp);auto_now" description:"请求时间（在NAVICAT中检索日志时使用）"`
+	StartTime  int       `orm:"column(start_time);null" description:"接口开始时间"`
+	Life       int       `orm:"column(life)" description:"接口耗时/单位毫秒"`
 }
 
 func (t *ApiLog) TableName() string {
