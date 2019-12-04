@@ -11,7 +11,7 @@
  Target Server Version : 50717
  File Encoding         : 65001
 
- Date: 28/11/2019 11:03:03
+ Date: 04/12/2019 09:57:03
 */
 
 SET NAMES utf8mb4;
@@ -25,22 +25,28 @@ CREATE TABLE `bg_api_log`  (
   `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `name` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '接口名称URL',
   `platform` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '接口所属平台',
-  `controller` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT 'controller控制器',
-  `action` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT 'action方法',
   `method` varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT 'URL请求方法',
   `params` varchar(2000) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '请求参数json',
   `header` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '请求头',
   `client` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '客户端IP或域名',
   `server` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '服务端名称（端口不是80时，会添加端口号）',
-  `response_code` varchar(8) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '响应状态码',
-  `response_msg` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '响应消息',
-  `response_data` text CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '响应数据',
+  `response` text CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '响应数据',
   `create_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '请求时间（在NAVICAT中检索日志时使用）',
   `start_time` int(10) NULL DEFAULT NULL COMMENT '接口开始时间',
-  `end_time` int(10) NULL DEFAULT NULL COMMENT '接口结束时间',
   `life` int(10) NOT NULL DEFAULT -1 COMMENT '接口耗时/单位毫秒',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of bg_api_log
+-- ----------------------------
+INSERT INTO `bg_api_log` VALUES (1, '/v1/weather/future', '测试', 'GET', '{\"area\":\"朝阳区\",\"latitude\":\"39.82\",\"longitude\":\"118.45\"}', '{\"Accept\":[\"application/json\"],\"Accept-Encoding\":[\"gzip, deflate, br\"],\"Accept-Language\":[\"zh-CN,zh;q=0.9\"],\"Connection\":[\"keep-alive\"],\"Cookie\":[\"pgv_pvid=4183265417; beegosessionID=a2c1287951e8b69db5d6741f45cbcd36; beegosessionID=89770a385da2f7347fb86cf', 'http://localhost:8080/swagger/', 'localhost', '响应', '2019-12-03 18:07:23', 1575367642, 250);
+INSERT INTO `bg_api_log` VALUES (2, '/v1/weather/future', '测试', 'GET', '{\"area\":\"朝阳区\",\"latitude\":\"39.82\",\"longitude\":\"118.45\"}', '{\"Accept\":[\"application/json\"],\"Accept-Encoding\":[\"gzip, deflate, br\"],\"Accept-Language\":[\"zh-CN,zh;q=0.9\"],\"Connection\":[\"keep-alive\"],\"Cookie\":[\"pgv_pvid=4183265417; beegosessionID=89770a385da2f7347fb86cf32f79e9b2\"],\"Referer\":[\"http://localhost:8080/swa', 'http://localhost:8080/swagger/', 'localhost', '响应', '2019-12-03 18:07:47', 1575367666, 250);
+INSERT INTO `bg_api_log` VALUES (3, '/v1/weather/future', '测试', 'GET', '{\"area\":\"朝阳区\",\"latitude\":\"39.82\",\"longitude\":\"118.45\"}', '{\"Accept\":[\"application/json\"],\"Accept-Encoding\":[\"gzip, deflate, br\"],\"Accept-Language\":[\"zh-CN,zh;q=0.9\"],\"Connection\":[\"keep-alive\"],\"Cookie\":[\"pgv_pvid=4183265417; beegosessionID=46c7bca54cc1b341cfaee9b62484025d; beegosessionID=aa832dd159ba99dbb771850', 'http://localhost:8080/swagger/', 'localhost', '响应', '2019-12-03 18:36:42', 1575369401, 35);
+INSERT INTO `bg_api_log` VALUES (4, '/v1/weather/future', '测试', 'GET', '{\"area\":\"朝阳区\",\"latitude\":\"39.82\",\"longitude\":\"118.45\"}', '{\"Accept\":[\"application/json\"],\"Accept-Encoding\":[\"gzip, deflate, br\"],\"Accept-Language\":[\"zh-CN,zh;q=0.9\"],\"Connection\":[\"keep-alive\"],\"Cookie\":[\"pgv_pvid=4183265417; beegosessionID=aa832dd159ba99dbb7718504682feac1; beegosessionID=8071009c4e43f0ff25219f6', 'http://localhost:8080/swagger/', 'localhost', '响应', '2019-12-03 18:45:59', 1575369959, 302);
+INSERT INTO `bg_api_log` VALUES (5, '/v1/weather/future', '测试', 'GET', '{\"area\":\"朝阳区\",\"latitude\":\"39.82\",\"longitude\":\"118.45\"}', '{\"Accept\":[\"application/json\"],\"Accept-Encoding\":[\"gzip, deflate, br\"],\"Accept-Language\":[\"zh-CN,zh;q=0.9\"],\"Connection\":[\"keep-alive\"],\"Cookie\":[\"pgv_pvid=4183265417; beegosessionID=8071009c4e43f0ff25219f6b35d907cd; beegosessionID=42e438c60b6e7f2ca96c939', 'http://localhost:8080/swagger/', 'localhost', '响应', '2019-12-03 18:48:23', 1575370103, 312);
+INSERT INTO `bg_api_log` VALUES (6, '/v1/weather/future', '测试', 'GET', '{\"area\":\"朝阳区\",\"latitude\":\"39.82\",\"longitude\":\"118.45\"}', '{\"Accept\":[\"application/json\"],\"Accept-Encoding\":[\"gzip, deflate, br\"],\"Accept-Language\":[\"zh-CN,zh;q=0.9\"],\"Connection\":[\"keep-alive\"],\"Cookie\":[\"pgv_pvid=4183265417; beegosessionID=42e438c60b6e7f2ca96c9394af80a886; beegosessionID=c097fa8540f08cd035ae991', 'http://localhost:8080/swagger/', 'localhost', '响应', '2019-12-03 18:48:42', 1575370122, 46);
+INSERT INTO `bg_api_log` VALUES (7, '/v1/weather/future', '测试', 'GET', '{\"area\":\"朝阳区\",\"latitude\":\"39.82\",\"longitude\":\"118.45\"}', '{\"Accept\":[\"application/json\"],\"Accept-Encoding\":[\"gzip, deflate, br\"],\"Accept-Language\":[\"zh-CN,zh;q=0.9\"],\"Connection\":[\"keep-alive\"],\"Cookie\":[\"pgv_pvid=4183265417; beegosessionID=c097fa8540f08cd035ae991d30f026a4; beegosessionID=7874c62da06afb82bddac9b', 'http://localhost:8080/swagger/', 'localhost', '{\"code\":200,\"data\":{\"rain\":{\"20191204\":{\"rain\":0,\"t\":\"55.359\",\"tMax\":9999,\"tMin\":-1.5799926757812273,\"wet\":\"55.359\",\"windLevel\":\"2级\",\"windSpeed\":\"2.014\"},\"20191205\":{\"rain\":0,\"t\":\"44.41\",\"tMax\":9999,\"tMin\":1.5299926757812727,\"wet\":\"44.41\",\"windLevel\":\"2级\",\"windSpeed\":\"2.235\"},\"20191206\":{\"rain\":0,\"t\":\"62.62\",\"tMax\":9999,\"tMin\":5.309991455078148,\"wet\":\"62.62\",\"windLevel\":\"2级\",\"windSpeed\":\"2.309\"},\"20191207\":{\"rain\":0,\"t\":\"49.251\",\"tMax\":9999,\"tMin\":5.850000000000023,\"wet\":\"49.251\",\"windLevel\":\"2级\",\"windSpeed\":\"1.67\"},\"20191208\":{\"rain\":0,\"t\":\"60.547\",\"tMax\":9999,\"tMin\":4.570001220703148,\"wet\":\"60.547\",\"windLevel\":\"1级\",\"windSpeed\":\"1.224\"},\"20191209\":{\"rain\":0,\"t\":\"73.874\",\"tMax\":9999,\"tMin\":6.089990234375023,\"wet\":\"73.874\",\"windLevel\":\"2级\",\"windSpeed\":\"1.931\"},\"20191210\":{\"rain\":0,\"t\":\"58.081\",\"tMax\":9999,\"tMin\":5.469995117187523,\"wet\":\"58.081\",\"windLevel\":\"2级\",\"windSpeed\":\"2.897\"}},\"weather\":[{\"cwd_am\":\"5\",\"cwd_pm\":\"1\",\"cwind_am\":\"0\",\"cwind_pm\":\"0\",\"cwp_am\":\"00\",\"cwp_pm\":\"00\",\"datatime\":\"20191204\",\"sunrise\":\"07:19\",\"sunset\":\"16:49\",\"t_max\":9,\"t_min\":-5,\"updatetime\":\"201912040804\",\"wd_am\":\"西南风\",\"wd_pm\":\"东北风\",\"wind_am\":\"\\u003c3级\",\"wind_pm\":\"\\u003c3级\",\"wp_am\":\"晴\",\"wp_pm\":\"晴\"},{\"cwd_am\":\"2\",\"cwd_pm\":\"3\",\"cwind_am\":\"0\",\"cwind_pm\":\"0\",\"cwp_am\":\"00\",\"cwp_pm\":\"00\",\"datatime\":\"20191205\",\"sunrise\":\"07:20\",\"sunset\":\"16:49\",\"t_max\":2,\"t_min\":-6,\"updatetime\":\"201912040804\",\"wd_am\":\"东风\",\"wd_pm\":\"东南风\",\"wind_am\":\"\\u003c3级\",\"wind_pm\":\"\\u003c3级\",\"wp_am\":\"晴\",\"wp_pm\":\"晴\"},{\"cwd_am\":\"5\",\"cwd_pm\":\"1\",\"cwind_am\":\"0\",\"cwind_pm\":\"0\",\"cwp_am\":\"00\",\"cwp_pm\":\"00\",\"datatime\":\"20191206\",\"sunrise\":\"07:21\",\"sunset\":\"16:49\",\"t_max\":3,\"t_min\":-6,\"updatetime\":\"201912040804\",\"wd_am\":\"西南风\",\"wd_pm\":\"东北风\",\"wind_am\":\"\\u003c3级\",\"wind_pm\":\"\\u003c3级\",\"wp_am\":\"晴\",\"wp_pm\":\"晴\"},{\"cwd_am\":\"1\",\"cwd_pm\":\"5\",\"cwind_am\":\"0\",\"cwind_pm\":\"0\",\"cwp_am\":\"00\",\"cwp_pm\":\"00\",\"datatime\":\"20191207\",\"sunrise\":\"07:21\",\"sunset\":\"16:49\",\"t_max\":4,\"t_min\":-6,\"updatetime\":\"201912040804\",\"wd_am\":\"东北风\",\"wd_pm\":\"西南风\",\"wind_am\":\"\\u003c3级\",\"wind_pm\":\"\\u003c3级\",\"wp_am\":\"晴\",\"wp_pm\":\"晴\"},{\"cwd_am\":\"5\",\"cwd_pm\":\"8\",\"cwind_am\":\"0\",\"cwind_pm\":\"0\",\"cwp_am\":\"00\",\"cwp_pm\":\"01\",\"datatime\":\"20191208\",\"sunrise\":\"07:22\",\"sunset\":\"16:49\",\"t_max\":6,\"t_min\":-6,\"updatetime\":\"201912040804\",\"wd_am\":\"西南风\",\"wd_pm\":\"北风\",\"wind_am\":\"\\u003c3级\",\"wind_pm\":\"\\u003c3级\",\"wp_am\":\"晴\",\"wp_pm\":\"多云\"},{\"cwd_am\":\"5\",\"cwd_pm\":\"7\",\"cwind_am\":\"0\",\"cwind_pm\":\"0\",\"cwp_am\":\"01\",\"cwp_pm\":\"01\",\"datatime\":\"20191209\",\"sunrise\":\"07:23\",\"sunset\":\"16:49\",\"t_max\":5,\"t_min\":-5,\"updatetime\":\"201912040804\",\"wd_am\":\"西南风\",\"wd_pm\":\"西北风\",\"wind_am\":\"\\u003c3级\",\"wind_pm\":\"\\u003c3级\",\"wp_am\":\"多云\",\"wp_pm\":\"多云\"},{\"cwd_am\":\"7\",\"cwd_pm\":\"7\",\"cwind_am\":\"1\",\"cwind_pm\":\"1\",\"cwp_am\":\"00\",\"cwp_pm\":\"00\",\"datatime\":\"20191210\",\"sunrise\":\"07:24\",\"sunset\":\"16:49\",\"t_max\":8,\"t_min\":-5,\"updatetime\":\"201912040804\",\"wd_am\":\"西北风\",\"wd_pm\":\"西北风\",\"wind_am\":\"3-4级\",\"wind_pm\":\"3-4级\",\"wp_am\":\"晴\",\"wp_pm\":\"晴\"}]},\"msg\":\"成功\"}', '2019-12-04 09:52:36', 1575424355, 191);
 
 -- ----------------------------
 -- Table structure for bg_area_code
@@ -3250,24 +3256,5 @@ INSERT INTO `bg_area_code` VALUES (3178, '101340403', 'zhanghua', '彰化', 'CN'
 INSERT INTO `bg_area_code` VALUES (3179, '101340404', 'nantou', '南投', 'CN', 'China', '中国', 'taiwan', '台湾', 'taizhong', '台中', 23.9160, 120.6850, '2018-07-31 11:27:17', '2018-07-31 11:27:17');
 INSERT INTO `bg_area_code` VALUES (3180, '101340405', 'hualian', '花莲', 'CN', 'China', '中国', 'taiwan', '台湾', 'taizhong', '台中', 23.9830, 121.6030, '2018-07-31 11:27:17', '2018-07-31 11:27:17');
 INSERT INTO `bg_area_code` VALUES (3181, '101340406', 'yunlin', '云林', 'CN', 'China', '中国', 'taiwan', '台湾', 'taizhong', '台中', 23.7180, 120.5380, '2018-07-31 11:27:17', '2018-07-31 11:27:17');
-
--- ----------------------------
--- Table structure for migrations
--- ----------------------------
-DROP TABLE IF EXISTS `migrations`;
-CREATE TABLE `migrations`  (
-  `id_migration` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'surrogate key',
-  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'migration name, unique',
-  `created_at` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'date migrated or rolled back',
-  `statements` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT 'SQL statements for this migration',
-  `rollback_statements` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT 'SQL statment for rolling back migration',
-  `status` enum('update','rollback') CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'update indicates it is a normal migration while rollback means this migration is rolled back',
-  PRIMARY KEY (`id_migration`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of migrations
--- ----------------------------
-INSERT INTO `migrations` VALUES (1, 'Post_20191122_133706', '2019-11-22 13:37:35', 'CREATE TABLE post(`id` int(11) NOT NULL AUTO_INCREMENT,`title` varchar(128) NOT NULL,`body` longtext  NOT NULL,PRIMARY KEY (`id`))', NULL, 'update');
 
 SET FOREIGN_KEY_CHECKS = 1;
