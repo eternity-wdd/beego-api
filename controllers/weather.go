@@ -65,8 +65,7 @@ func (c *WeatherController) Get() {
 	longitude, latitude = coordTransform.GCJ02toWGS84(longitude, latitude)
 
 	// 通过经纬度获取短临降水(两小时)
-	rainUrl := "http://api.mlogcn.com/nowcastservice/v1/mete/nowcast/coor/point?&lon=" + strconv.FormatFloat(longitude, 'f', 6, 64) + "&lat=" + strconv.FormatFloat(latitude, 'f', 6, 64) + "&token=5ccc96af717842a5ad410a0ede8bfc6b"
-
+	rainUrl := "http://47.97.212.221:8082/?type=2&lon=" + strconv.FormatFloat(longitude, 'f', 6, 64) + "&lat=" + strconv.FormatFloat(latitude, 'f', 6, 64) + "&token=5ccc96af717842a5ad410a0ede8bfc6b"
 	rain, err := httplib.Get(rainUrl).String()
 	if err != nil {
 		fmt.Println("调用短临降水接口失败")
@@ -94,7 +93,7 @@ func (c *WeatherController) Get() {
 	data["rainfall"] = strconv.FormatFloat(sum, 'f', 2, 64) + " mm"
 	data["weatherMsg"] = rainMap["msg"]
 	// 根据经纬度获取该地的实时天气信息
-	weatherUrl := "http://api.mlogcn.com/stdataservice/v2/rnwst/nearest/time/point?lon=" + strconv.FormatFloat(longitude, 'f', 6, 64) + "&lat=" + strconv.FormatFloat(latitude, 'f', 6, 64) + "&distance=100000&var=evp&var=p&var=ws_2mi_avg&var=t&var=rh&var=t&var=wp&var=wd_2mi_avg&var=ws_2mi_avg&var=t_min_24h&var=t_max_24h&var=staName&var=staCode&token=5ccc96af717842a5ad410a0ede8bfc6b"
+	weatherUrl := "http://47.97.212.221:8082/?type=3&lon=" + strconv.FormatFloat(longitude, 'f', 6, 64) + "&lat=" + strconv.FormatFloat(latitude, 'f', 6, 64) + "&distance=100000&var=evp&var=p&var=ws_2mi_avg&var=t&var=rh&var=t&var=wp&var=wd_2mi_avg&var=ws_2mi_avg&var=t_min_24h&var=t_max_24h&var=staName&var=staCode&token=5ccc96af717842a5ad410a0ede8bfc6b"
 	weather, err := httplib.Get(weatherUrl).String()
 	if err != nil {
 		fmt.Println("调用实时天气接口失败")
@@ -136,7 +135,7 @@ func (c *WeatherController) Get() {
 	data["staCode"] = weatherMap["staCode"]
 
 	// 通过经纬获取地名，腾讯地图
-	txMapUrl := "https://apis.map.qq.com/ws/geocoder/v1/?location=" + strconv.FormatFloat(latitude, 'f', 2, 64) + "," + strconv.FormatFloat(longitude, 'f', 2, 64) + "&key=XOJBZ-TVA6R-UJBW3-W4KL7-RUKJH-AWBGO&output=json"
+	txMapUrl := "https://apis.map.qq.com/ws/geocoder/v1/?location=" + strconv.FormatFloat(latitude, 'f', 2, 64) + "," + strconv.FormatFloat(longitude, 'f', 2, 64) + "&key=QLIBZ-QUVC6-QQES6-ECI37-BFIJ6-7HBBI&output=json" // 如果提示签名失败，去腾讯地图自己申请一个key即可
 	cityInfo, err := httplib.Get(txMapUrl).String()
 	if err != nil {
 		fmt.Println("调用腾讯地图失败")
@@ -214,8 +213,7 @@ func (c *WeatherController) Future() {
 
 	startDate := time.Unix(start, 0).Format("20060102")
 	endDate := time.Unix(end, 0).Format("20060102")
-	futureUrl := "http://api.mlogcn.com/weatherservice/v2/cma15d/area/range/zone?start=" + startDate + "&end=" + endDate + "&areaCode=" + areaCode.(string) + "&var=wp&token=5ccc96af717842a5ad410a0ede8bfc6b"
-
+	futureUrl := "http://47.97.212.221:8082/?type=1&start=" + startDate + "&end=" + endDate + "&areaCode=" + areaCode.(string) + "&var=wp&token=5ccc96af717842a5ad410a0ede8bfc6b"
 	future, err := httplib.Get(futureUrl).String()
 	if err != nil {
 		fmt.Println("请求未来N天的天气预报失败")
