@@ -48,5 +48,5 @@ localhost:8080/swagger,
 
 - 其他：
 ```
-  其中model是使用beego自带工具自动生成的
+  其中model是使用beego自带工具自动生成的, 使用方法详见：https://www.cnblogs.com/lz0925/p/11910025.html， 有问题可以留言或者在博客中加我VX
 ```
